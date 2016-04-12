@@ -9,6 +9,8 @@ import java.util.Scanner;
  */
 public class board {
     private char [][] board;  //This 2d array is the board itself
+    private int numRows;
+    private int numCol;
 
     private final static char EMPTY = '.';  //used for tiles that currently have nothing on them
     private final static char LASER = 'L';  // used for tiles that are holding a laser
@@ -24,12 +26,14 @@ public class board {
      */
     public board(String filename) throws FileNotFoundException{
         Scanner in = new Scanner(new File(filename));
-        int dim = in.nextInt();
-        this.board = new char [dim][dim];
-        for(int row = 0; row < dim; row ++){
+        this.numRows = in.nextInt();
+        this.numCol = in.nextInt();
+        this.board = new char [numRows][numCol];
+        in.nextLine();
+        for(int row = 0; row < numRows; row ++){
             String line = in.nextLine();
             String [] tokens = line.split(" ");
-            for(int col = 0; col < dim; col ++){
+            for(int col = 0; col < numCol; col ++){
                 String x = tokens[col];
                 char y = x.charAt(0);
                 board[row][col] = y;
@@ -49,10 +53,43 @@ public class board {
     }
 
     public String toString(){
-        String result = " ";
-        for(Integer i = 0; i < board.length; i++){
-            result += i.toString();
+        String result = "  ";
+        for(Integer i = 0; i < numCol; i++){
+            if(i >= 10){
+                i = i-10;
+                result += i.toString() + " ";
+            }
+            else{
+                result += i.toString() + " ";
+            }
         }
+        result += "\n";
+        for(int i = 0; i < numCol*2; i++){
+            if(i == 0){
+                result += "  ";
+            }
+            else{
+                result += "-";
+            }
+        }
+        result += "\n";
+        for(Integer row = 0; row < numRows; row ++){
+            if (row >= 10){
+                row -= 10;
+                result += row.toString();
+                row += 10;
+            }
+            else{
+                result += row.toString();
+            }
+            result += "|";
+            for(int col = 0; col < numCol; col++){
+                result += board[row][col] + " ";
+            }
+            result += "\n";
+        }
+
+
         return result;
     }
 }
