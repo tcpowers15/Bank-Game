@@ -4,9 +4,14 @@
  */
 public class LasersPTUI {
 
-    public static void main(String[] args) {
-        System.out.println("My name is Trevor Powers");
-        System.out.println("My name Brian Powers");
-        System.out.println("Our Project account is p142-11h");
+    public void help(){
+        System.out.println("a|add r c: Add laser to (r,c)");
+        System.out.println("d|display: Display safe");
+        System.out.println("h|help: Print this help message");
+        System.out.println("q|quit: Exit program");
+        System.out.println("r|remove r c: Remove laser from (r,c)");
+        System.out.println("v|verify: Verify safe correctness");
     }
+
+
 }
