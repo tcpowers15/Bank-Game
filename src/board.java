@@ -42,14 +42,53 @@ public class board {
         in.close();
     }
 
-
+    /**
+     * This method takes in a text file, and uses the commands in it to populate
+     * the board with the initial set up
+     * @param file  the name of a .txt file
+     * @throws FileNotFoundException
+     */
     public void initiate(String file) throws FileNotFoundException{
         Scanner in = new Scanner(new File(file));
         while(in.hasNext()){
             String line = in.nextLine();
             String [] tokens = line.split(" ");
 
-            //TODO
+            String command = tokens[0];
+            if(tokens.length == 3){
+                int row = Integer.parseInt(tokens[1]);
+                int col = Integer.parseInt(tokens[2]);
+
+                if(command.substring(0,1).matches("a")){
+                    //TODO
+                    //call the add command using row and column as parameters
+                }
+                else if(command.substring(0,1).matches("r")){
+                    //TODO
+                    //call the remove command
+                }
+            }
+            else{
+
+                if(command.substring(0,1).matches("d")){
+                    //TODO
+                    //call the display method
+                }
+                else if(command.substring(0,1).matches("h")){
+                    //TODO
+                    //call the help method
+                }
+                else if(command.substring(0,1).matches("q")){
+                    //TODO
+                    //quit the program
+                }
+                else if(command.substring(0,1).matches("v")){
+                    //TODO
+                    //call the verify method
+                }
+
+            }
+
         }
     }
 
