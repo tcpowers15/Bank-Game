@@ -9,11 +9,25 @@ public class LasersPTUI {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner in = new Scanner(System.in);
 
-        String filename = in.nextLine();
+        if (args.length == 1) {
+            String filename = args[0];
+            board game = new board(filename);
+        }
+        else if (args.length == 2) {
+            String filename = args[0];
+            String initial = args[1];
 
-        board game = new board(filename);
-        System.out.println(game);
+            board game = new board(filename);
+            game.initiate(initial);
+        }
+        else {
+            System.out.println("Usage java LasersPTUI safe-file [input]");
+        }
     }
+
+
+
+
 
     public void help(){
         System.out.println("a|add r c: Add laser to (r,c)");

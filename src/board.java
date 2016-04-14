@@ -42,6 +42,17 @@ public class board {
         in.close();
     }
 
+
+    public void initiate(String file) throws FileNotFoundException{
+        Scanner in = new Scanner(new File(file));
+        while(in.hasNext()){
+            String line = in.nextLine();
+            String [] tokens = line.split(" ");
+
+            //TODO
+        }
+    }
+
     /**
      * This method will verify whether or not the board is valid or not
      *
