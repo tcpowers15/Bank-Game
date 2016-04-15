@@ -11,16 +11,15 @@ public class LasersPTUI {
         if (args.length == 1) {
             String filename = args[0];
             board game = new board(filename);
-            boolean playing = true;
-            play(game, playing);
+            play(game, true);
         }
         else if (args.length == 2) {
             String filename = args[0];
             String initial = args[1];
 
             board game = new board(filename);
-           boolean playing = game.initiate(initial);
-            play(game, playing);
+            boolean play = game.initiate(initial);
+            play(game, play);
         }
         else {
             System.out.println("Usage java LasersPTUI safe-file [input]");
@@ -33,22 +32,22 @@ public class LasersPTUI {
      *
      * @param game a board
      */
-    public static void play(board game, boolean plays){
+    public static void play(board game, boolean play){
         Scanner in = new Scanner(System.in);
-        boolean playing = plays;
+        boolean playing = play;
 
         while (playing){
             System.out.println(game);
             String input = in.nextLine();
 
             String command = input.substring(0,1);
-            String [] tokens = input.split(" ");
+            String[] tokens = input.split(" ");
 
             if(command.equals("a")){
                 if(tokens.length == 3){
                     int row = Integer.parseInt(tokens[1]);
                     int col = Integer.parseInt(tokens[2]);
-                    game.add(row,col);
+                    game.add(row, col);
                 }
                 else{
                     System.out.println("Incorrect Coordinates");
@@ -61,11 +60,7 @@ public class LasersPTUI {
                 game.help();
             }
             else if(command.equals("q")){
-<<<<<<< HEAD
                 playing = game.quit(playing);
-=======
-                System.exit(0);
->>>>>>> origin/master
             }
             else if(command.equals("r")){
                 if(tokens.length == 3){
@@ -86,5 +81,4 @@ public class LasersPTUI {
 
         }
     }
-
 }
