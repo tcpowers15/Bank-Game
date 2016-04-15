@@ -37,7 +37,8 @@ public class LasersPTUI {
         boolean playing = play;
 
         while (playing){
-            System.out.println(game);
+            System.out.print(game);
+            System.out.print("> ");
             String input = in.nextLine();
 
             String command = input.substring(0,1);

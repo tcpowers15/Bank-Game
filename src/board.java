@@ -225,7 +225,7 @@ public class board {
      */
     public void display(){
         String r = this.toString();
-        System.out.println(r);
+        System.out.print(r);
     }
 
 
