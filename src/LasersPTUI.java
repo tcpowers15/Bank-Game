@@ -55,8 +55,7 @@ public class LasersPTUI {
                 //Call help
             }
             else if(command.equals("q")){
-                //TODO
-                //quit
+                System.exit(0);
             }
             else if(command.equals("r")){
                 //TODO
