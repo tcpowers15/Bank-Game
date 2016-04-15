@@ -9,13 +9,75 @@ public class LasersPTUI {
     private board game;
 
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner in = new Scanner(System.in);
 
-        String filename = in.nextLine();
+        if (args.length == 1) {
+            String filename = args[0];
+            board game = new board(filename);
+            play(game);
+        }
+        else if (args.length == 2) {
+            String filename = args[0];
+            String initial = args[1];
 
-        board game = new board(filename);
-        System.out.println(game);
+            board game = new board(filename);
+            game.initiate(initial);
+            play(game);
+        }
+        else {
+            System.out.println("Usage java LasersPTUI safe-file [input]");
+        }
     }
+
+    /**
+     * This method actually simulates the game of placing the lasers on and off
+     * the board
+     *
+     * @param game a board
+     */
+    public static void play(board game){
+        Scanner in = new Scanner(System.in);
+        boolean playing = true;
+
+        while (playing){
+            System.out.println(game);
+            String input = in.nextLine();
+
+            String command = input.substring(0,1);
+
+            if(command.equals("a")){
+                //TODO
+                //Call boards add method
+            }
+            else if(command.equals("d")){
+                //TODO
+                //Call boards display method
+            }
+            else if(command.equals("h")){
+                //TODO
+                //Call help
+            }
+            else if(command.equals("q")){
+                //TODO
+                //quit
+            }
+            else if(command.equals("r")){
+                //TODO
+                //call boards remove method
+            }
+            else if(command.equals("v")){
+                //TODO
+                //Call boards verify
+            }
+            else{
+                System.out.println("Unrecognized command: " + input);
+            }
+
+        }
+    }
+
+
+
+
 
     public void help(){
         System.out.println("a|add r c: Add laser to (r,c)");
