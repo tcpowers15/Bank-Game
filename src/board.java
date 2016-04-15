@@ -163,6 +163,7 @@ public class board {
                   break;
               }
           }
+            System.out.println("Safe is fully verified!");
         }
         else{
             System.out.println("Trouble verifying at: ("+orow+", "+ocol+")");

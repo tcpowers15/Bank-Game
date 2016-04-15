@@ -35,9 +35,9 @@ public class LasersPTUI {
     public static void play(board game, boolean play){
         Scanner in = new Scanner(System.in);
         boolean playing = play;
+        System.out.print(game);
 
         while (playing){
-            System.out.print(game);
             System.out.print("> ");
             String input = in.nextLine();
 
@@ -53,6 +53,7 @@ public class LasersPTUI {
                 else{
                     System.out.println("Incorrect Coordinates");
                 }
+                System.out.print(game);
             }
             else if(command.equals("d")){
                 game.display();
@@ -72,14 +73,15 @@ public class LasersPTUI {
                 else{
                     System.out.println("Incorrect Coordinates");
                 }
+                System.out.print(game);
             }
             else if(command.equals("v")){
                 game.verify();
+                System.out.print(game);
             }
             else{
                 System.out.println("Unrecognized command: " + input);
             }
-
         }
     }
 }
