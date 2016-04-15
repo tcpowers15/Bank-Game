@@ -178,46 +178,46 @@ public class board {
      * @param c the column number
      */
     public void add(int r, int c) {
-        if (board[r][c] == LASER || board[r][c] == xPillar || board[r][c] == zero || board[r][c] == one
-                || board[r][c] == two || board[r][c] == three || board[r][c] == four) {
-            System.out.println("Error adding laser at: (" + r + ", " + c + ")");
-        }
-        else if(board[r][c] == EMPTY || board[r][c] == L_BEAM){
-            board[r][c] = LASER;
-            for(int i = 1; r+i < numRows;i++){
-                if(board[r+i][c] == EMPTY || board[r+i][c] == L_BEAM){
-                    board[r+i][c] = L_BEAM;
-                }
-                else{
-                    break;
-                }
+        if (r >= 0 && r < numRows && c >= 0 && c < numCol) {
+            if (board[r][c] == LASER || board[r][c] == xPillar || board[r][c] == zero || board[r][c] == one
+                    || board[r][c] == two || board[r][c] == three || board[r][c] == four) {
+                System.out.println("Error adding laser at: (" + r + ", " + c + ")");
+            } else if (board[r][c] == EMPTY || board[r][c] == L_BEAM) {
+                board[r][c] = LASER;
+                for (int i = 1; r + i < numRows; i++) {
+                    if (board[r + i][c] == EMPTY || board[r + i][c] == L_BEAM) {
+                        board[r + i][c] = L_BEAM;
+                    } else {
+                        break;
+                    }
 
+                }
+                for (int j = 1; r - j >= 0; j++) {
+                    if (board[r - j][c] == EMPTY || board[r - j][c] == L_BEAM) {
+                        board[r - j][c] = L_BEAM;
+                    } else {
+                        break;
+                    }
+                }
+                for (int k = 1; c + k < numCol; k++) {
+                    if (board[r][c + k] == EMPTY || board[r][c + k] == L_BEAM) {
+                        board[r][c + k] = L_BEAM;
+                    } else {
+                        break;
+                    }
+                }
+                for (int l = 1; c - l >= 0; l++) {
+                    if (board[r][c - l] == EMPTY || board[r][c - l] == L_BEAM) {
+                        board[r][c - l] = L_BEAM;
+                    } else {
+                        break;
+                    }
+                }
+                System.out.println("Laser added at: (" + r + ", " + c + ")");
             }
-            for(int j = 1; r-j >= 0; j++){
-                if(board[r-j][c] == EMPTY || board[r-j][c] == L_BEAM){
-                    board[r-j][c] = L_BEAM;
-                }
-                else{
-                    break;
-                }
-            }
-            for(int k = 1; c+k < numCol; k++){
-                if(board[r][c+k] == EMPTY || board[r][c+k] == L_BEAM){
-                    board[r][c+k] = L_BEAM;
-                }
-                else{
-                    break;
-                }
-            }
-            for(int l = 1; c-l >= 0; l++){
-                if(board[r][c-l] == EMPTY || board[r][c-l] == L_BEAM){
-                    board[r][c-l] = L_BEAM;
-                }
-                else{
-                    break;
-                }
-            }
-            System.out.println("Laser added at: (" + r + ", " + c + ")");
+        }
+        else{
+            System.out.println("Error adding laser at: (" + r + ", " + c + ")");
         }
     }
 
@@ -1086,57 +1086,55 @@ public class board {
      * @param c the column number
      */
     public void remove(int r, int c){
-        if (board[r][c] == LASER) {
-            if (removedown(r, c) || removeup(r, c)) {
-                board[r][c] = L_BEAM;
-            }
-            else {
-                for (int row = r; row < numRows; row++) {
-                    if (!removeright(row, c) && !removeleft(row, c) && board[row][c] == L_BEAM) {
-                        board[row][c] = EMPTY;
+        if (r >= 0 && r < numRows && c >= 0 && c < numCol) {
+            if (board[r][c] == LASER) {
+                if (removedown(r, c) || removeup(r, c)) {
+                    board[r][c] = L_BEAM;
+                } else {
+                    for (int row = r; row < numRows; row++) {
+                        if (!removeright(row, c) && !removeleft(row, c) && board[row][c] == L_BEAM) {
+                            board[row][c] = EMPTY;
+                        } else if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one ||
+                                board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                            break;
+                        }
                     }
-                    else if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one ||
-                            board[row][c] == two || board[row][c] == three || board[row][c] == four) {
-                        break;
-                    }
-                }
-                for (int row = r; row >= 0; row--) {
-                    if (!removeright(row, c) && !removeleft(row, c) && board[row][c] == L_BEAM) {
-                        board[row][c] = EMPTY;
-                    }
-                    else if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one ||
-                            board[row][c] == two || board[row][c] == three || board[row][c] == four) {
-                        break;
-                    }
-                }
-            }
-            if (removeleft(r, c) || removeright(r, c)) {
-                board[r][c] = L_BEAM;
-            }
-            else {
-                for (int col = c; col < numCol; col++) {
-                    if (!removeup(r, col) && !removedown(r, col) && board[r][col] == L_BEAM) {
-                        board[r][col] = EMPTY;
-                    }
-                    else if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one ||
-                            board[r][col] == two || board[r][col] == three || board[r][col] == four) {
-                        break;
+                    for (int row = r; row >= 0; row--) {
+                        if (!removeright(row, c) && !removeleft(row, c) && board[row][c] == L_BEAM) {
+                            board[row][c] = EMPTY;
+                        } else if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one ||
+                                board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                            break;
+                        }
                     }
                 }
-                for (int col = c; col >= 0; col--) {
-                    if (!removeup(r, col) && !removedown(r, col) && board[r][col] == L_BEAM) {
-                        board[r][col] = EMPTY;
+                if (removeleft(r, c) || removeright(r, c)) {
+                    board[r][c] = L_BEAM;
+                } else {
+                    for (int col = c; col < numCol; col++) {
+                        if (!removeup(r, col) && !removedown(r, col) && board[r][col] == L_BEAM) {
+                            board[r][col] = EMPTY;
+                        } else if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one ||
+                                board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                            break;
+                        }
                     }
-                    else if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one ||
-                            board[r][col] == two || board[r][col] == three || board[r][col] == four) {
-                        break;
+                    for (int col = c; col >= 0; col--) {
+                        if (!removeup(r, col) && !removedown(r, col) && board[r][col] == L_BEAM) {
+                            board[r][col] = EMPTY;
+                        } else if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one ||
+                                board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                            break;
+                        }
                     }
                 }
+                if (board[r][c] == LASER) {
+                    board[r][c] = EMPTY;
+                }
+                System.out.println("Laser removed at: (" + r + ", " + c + ")");
+            } else {
+                System.out.println("Error removing laser at: (" + r + ", " + c + ")");
             }
-            if(board[r][c] == LASER){
-                board[r][c] = EMPTY;
-            }
-            System.out.println("Laser removed at: (" + r + ", " + c + ")");
         }
         else{
             System.out.println("Error removing laser at: (" + r + ", " + c + ")");
