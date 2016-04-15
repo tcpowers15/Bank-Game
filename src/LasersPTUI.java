@@ -6,8 +6,6 @@ import java.util.Scanner;
  */
 public class LasersPTUI {
 
-    private board game;
-
     public static void main(String[] args) throws FileNotFoundException {
 
         if (args.length == 1) {
@@ -63,7 +61,11 @@ public class LasersPTUI {
                 game.help();
             }
             else if(command.equals("q")){
+<<<<<<< HEAD
                 playing = game.quit(playing);
+=======
+                System.exit(0);
+>>>>>>> origin/master
             }
             else if(command.equals("r")){
                 if(tokens.length == 3){

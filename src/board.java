@@ -136,7 +136,7 @@ public class board {
                 }
 
             }
-            for(int j = 1; r-j > 0; j--){
+            for(int j = 1; r-j > 0; j++){
                 if(board[r-j][c] == EMPTY || board[r-j][c] == L_BEAM){
                     board[r-j][c] = L_BEAM;
                 }
@@ -152,7 +152,7 @@ public class board {
                     break;
                 }
             }
-            for(int l = 1; c-l > 0; l--){
+            for(int l = 1; c-l > 0; l++){
                 if(board[r][c-l] == EMPTY || board[r][c-l] == L_BEAM){
                     board[r][c-l] = L_BEAM;
                 }
@@ -171,11 +171,13 @@ public class board {
      * @param c the column number
      */
     public void remove(int r, int c){
-        // make check for other lasers
         boolean hasLaser;
+        boolean hasLaser2;
+        boolean hasLaser3;
         if (board[r][c] == LASER){
-            board[r][c] = EMPTY;
             hasLaser = false;
+            hasLaser2 = false;
+            hasLaser3 = false;
             for(int i = 1; r+i < numRows;i++){
                 if(board[r+i][c] == L_BEAM && !hasLaser){
                     for(int m = 1; r+m < numRows; m++){
@@ -187,35 +189,166 @@ public class board {
                             hasLaser = false;
                         }
                     }
+                    for(int n = 1; c+n < numCol; n++){
+                        if(board[r][c+n] == LASER){
+                            hasLaser2 = true;
+                            break;
+                        }
+                        else{
+                            hasLaser2 = false;
+                        }
+                    }
+                    for(int o = 1; c-o > 0; o++){
+                        if(board[r][c-o] == LASER){
+                            hasLaser3 = true;
+                            break;
+                        }
+                        else{
+                            hasLaser3 = false;
+                        }
+                    }
+                    if(!hasLaser3 && !hasLaser2 && !hasLaser){
+                        board[r+i][c] = EMPTY;
+                    }
+                    if(hasLaser){
+                        board[r][c] = L_BEAM;
+                    }
                 }
-
                 else{
                     break;
                 }
             }
-            for(int j = 1; r-j > 0; j--){
-                if(board[r-j][c] == L_BEAM){
-
+            hasLaser = false;
+            hasLaser2 = false;
+            hasLaser3 = false;
+            for(int j = 1; r-j > 0; j++){
+                if(board[r-j][c] == L_BEAM && !hasLaser){
+                    for(int jm = 1; r-jm < numRows; jm++){
+                        if(board[r-jm][c] == LASER){
+                            hasLaser = true;
+                            break;
+                        }
+                        else{
+                            hasLaser = false;
+                        }
+                    }
+                    for(int jn = 1; c+jn < numCol; jn++){
+                        if(board[r][c+jn] == LASER){
+                            hasLaser2 = true;
+                            break;
+                        }
+                        else{
+                            hasLaser2 = false;
+                        }
+                    }
+                    for(int jo = 1; c-jo > 0; jo++){
+                        if(board[r][c-jo] == LASER){
+                            hasLaser3 = true;
+                            break;
+                        }
+                        else{
+                            hasLaser3 = false;
+                        }
+                    }
+                    if(!hasLaser3 && !hasLaser2 && !hasLaser){
+                        board[r-j][c] = EMPTY;
+                    }
+                    if(hasLaser){
+                        board[r][c] = L_BEAM;
+                    }
                 }
                 else{
                     break;
                 }
             }
+            hasLaser = false;
+            hasLaser2 = false;
+            hasLaser3 = false;
             for(int k = 1; c+k < numCol; k++){
-                if(board[r][c+k] == L_BEAM){
-                    board[r][c+k] = EMPTY;
+                if(board[r][c+k] == L_BEAM && !hasLaser){
+                    for(int km = 1; c+km < numRows; km++){
+                        if(board[r][c+km] == LASER){
+                            hasLaser = true;
+                            break;
+                        }
+                        else{
+                            hasLaser = false;
+                        }
+                    }
+                    for(int kn = 1; r+kn < numCol; kn++){
+                        if(board[r+kn][c] == LASER){
+                            hasLaser2 = true;
+                            break;
+                        }
+                        else{
+                            hasLaser2 = false;
+                        }
+                    }
+                    for(int ko = 1; r-ko > 0; ko++){
+                        if(board[r-ko][c] == LASER){
+                            hasLaser3 = true;
+                            break;
+                        }
+                        else{
+                            hasLaser3 = false;
+                        }
+                    }
+                    if(!hasLaser3 && !hasLaser2 && !hasLaser){
+                        board[r+k][c] = EMPTY;
+                    }
+                    if(hasLaser){
+                        board[r][c] = L_BEAM;
+                    }
                 }
                 else{
                     break;
                 }
             }
-            for(int l = 1; c-l > 0; l--){
-                if(board[r][c-l] == L_BEAM){
-                    board[r][c-l] = EMPTY;
+            hasLaser = false;
+            hasLaser2 = false;
+            hasLaser3 = false;
+            for(int l = 1; c-l > 0; l++){
+                if(board[r][c-l] == L_BEAM && !hasLaser){
+                    for(int lm = 1; c-lm < numRows; lm++){
+                        if(board[r][c-lm] == LASER){
+                            hasLaser = true;
+                            break;
+                        }
+                        else{
+                            hasLaser = false;
+                        }
+                    }
+                    for(int ln = 1; r+ln < numCol; ln++){
+                        if(board[r+ln][c] == LASER){
+                            hasLaser2 = true;
+                            break;
+                        }
+                        else{
+                            hasLaser2 = false;
+                        }
+                    }
+                    for(int lo = 1; r-lo > 0; lo++){
+                        if(board[r-lo][c] == LASER){
+                            hasLaser3 = true;
+                            break;
+                        }
+                        else{
+                            hasLaser3 = false;
+                        }
+                    }
+                    if(!hasLaser3 && !hasLaser2 && !hasLaser){
+                        board[r+l][c] = EMPTY;
+                    }
+                    if(hasLaser){
+                        board[r][c] = L_BEAM;
+                    }
                 }
                 else{
                     break;
                 }
+            }
+            if(board[r][c] == LASER){
+                board[r][c] = EMPTY;
             }
         }
         else{
