@@ -59,6 +59,7 @@ public class board {
         Scanner in = new Scanner(new File(file));
         boolean playing = true;
         while(in.hasNext()){
+            display();
             String line = in.nextLine();
             String [] tokens = line.split(" ");
 
@@ -108,9 +109,64 @@ public class board {
      *
      * @return  True if the board is valid, and false if not
      */
-    public boolean verify(){
-        //TODO
-        return false;
+    public void verify(){
+        boolean populated = true;
+        boolean isvalid = true;
+        boolean filled = false;
+
+        int orow = 0;
+        int ocol = 0;
+
+        for(int row = 0; row < numRows; row++){
+            for(int col = 0; col < numCol; col++){
+                if(board[row][col] == EMPTY){
+                    populated = false;
+                    if(!filled){
+                        orow = row;
+                        ocol = col;
+                        filled = true;
+                    }
+                }
+
+            }
+        }
+        if(populated){
+            boolean sbreak = false;
+          for(int row = 0; row < numRows; row ++){
+              for(int col = 0; col < numCol; col++){
+                  char help = board[row][col];
+                  if(help == LASER){
+                      isvalid = laserVal(row, col);
+                  }
+                  else if(help == zero){
+                      isvalid = zeroVal(row, col);
+                  }
+                  else if(help == one){
+                      isvalid = oneVal(row, col);
+                  }
+                  else if(help == two){
+                      isvalid = twoVal(row,col);
+                  }
+                  else if(help == three){
+                      isvalid = threeVal(row, col);
+                  }
+                  else if(help == four){
+                      isvalid = fourVal(row, col);
+                  }
+                  if(!isvalid){
+                      sbreak = true;
+                      System.out.println("Trouble verifying at: ("+row+", "+col+")");
+                      break;
+                  }
+              }
+              if(sbreak){
+                  break;
+              }
+          }
+        }
+        else{
+            System.out.println("Trouble verifying at: ("+orow+", "+ocol+")");
+        }
     }
 
 
@@ -430,5 +486,791 @@ public class board {
 
 
         return result;
+    }
+
+
+    public boolean laserVal(int row, int col){
+        if(row == 0) {
+
+            if (col == 0) {     /**if looking at (0,0) */
+
+                for (int r = 1; r < numRows; r++) {
+                    if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                            || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                        break;
+                    }
+
+                    else if (board[r][col] == LASER) {
+                        return false;
+                    }
+                }
+                for (int c = 1; c < numCol; c++) {
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+            }
+            if (col == numCol - 1) {    /**if looking at (0,lastCol)*/
+
+                for (int r = 1; r < numRows; r++) {
+                    if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                            || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                        break;
+                    }
+
+                    else if (board[r][col] == LASER) {
+                        return false;
+                    }
+                }
+                for (int c = col - 1; c >= 0; c--) {
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+            }
+            else {  /**if looking on first row*/
+
+                for (int r = 1; r < numRows; r++) {
+
+                    if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                            || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                        break;
+                    }
+
+                    else if (board[r][col] == LASER) {
+                        return false;
+                    }
+                }
+                for (int c = col - 1; c >= 0; c--) {
+
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+                for(int c = col +1; c < numCol; c++){
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        else if(row == numRows - 1){
+
+            if(col == 0){   /**if looking at (lastRow,0)*/
+
+               for(int r = row-1; r >= 0; r --){
+
+                   if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                           || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                       break;
+                   }
+
+                   else if (board[r][col] == LASER) {
+                       return false;
+                   }
+               }
+                for(int c = col+1; c < numCol; c++){
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+            }
+
+            if(col == numCol-1){    /**if looking at (lastRow,lastCol)*/
+
+                for(int r = row-1; r >= 0; r--){
+
+                    if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                            || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                        break;
+                    }
+
+                    else if (board[r][col] == LASER) {
+                        return false;
+                    }
+                }
+                for(int c = col-1; c >= 0; c --){
+
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+            }
+            else{   /** on the last row*/
+
+                for(int c = col-1; c >= 0; c--){
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+                for(int r = row-1; r >= 0; r--){
+                    if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                            || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                        break;
+                    }
+
+                    else if (board[r][col] == LASER) {
+                        return false;
+                    }
+                }
+                for(int c = col+1; c < numCol; c++){
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        if(col == 0){
+
+            if(row != 0 || row!= numRows-1){    /**looks at the first collumn*/
+
+                for(int r = row+1; r >= 0; r++){
+                    if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                            || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                        break;
+                    }
+
+                    else if (board[r][col] == LASER) {
+                        return false;
+                    }
+                }
+                for(int c = col +1; c < numCol; c++){
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+                for(int r = row +1; r < numRows; r++){
+                    if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                            || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                        break;
+                    }
+
+                    else if (board[r][col] == LASER) {
+                        return false;
+                    }
+                }
+            }
+        }
+        if(col == numCol-1){
+
+            if(row != 0 || row != numRows-1){   /**if looking at last column*/
+
+                for(int r = row+1; r < numRows; r++){
+                    if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                            || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                        break;
+                    }
+
+                    else if (board[r][col] == LASER) {
+                        return false;
+                    }
+                }
+                for(int r = row-1; r >= 0; r --){
+                    if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                            || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                        break;
+                    }
+
+                    else if (board[r][col] == LASER) {
+                        return false;
+                    }
+                }
+                for(int c = col -1; c >= 0; c--){
+                    if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                            || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                        break;
+                    }
+
+                    else if (board[row][c] == LASER) {
+                        return false;
+                    }
+                }
+            }
+        }
+        else{
+
+            for(int r = row +1; r < numRows; r++){
+                if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                        || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                    break;
+                }
+
+                else if (board[r][col] == LASER) {
+                    return false;
+                }
+            }
+            for(int c = col +1; c < numCol; c++){
+                if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                        || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                    break;
+                }
+
+                else if (board[row][c] == LASER) {
+                    return false;
+                }
+            }
+            for(int r = row -1; r >= 0; r--){
+                if (board[r][col] == xPillar || board[r][col] == zero || board[r][col] == one
+                        || board[r][col] == two || board[r][col] == three || board[r][col] == four) {
+                    break;
+                }
+
+                else if (board[r][col] == LASER) {
+                    return false;
+                }
+            }
+            for(int c = col -1; c >= 0; c--){
+                if (board[row][c] == xPillar || board[row][c] == zero || board[row][c] == one
+                        || board[row][c] == two || board[row][c] == three || board[row][c] == four) {
+                    break;
+                }
+
+                else if (board[row][c] == LASER) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public boolean zeroVal(int row, int col){
+        if(row==0){
+            if(col==0){
+                if(board[row][col+1]==LASER || board[row+1][col]==LASER){
+                    return false;
+                }
+            }
+            else if(col == numCol-1){
+                if(board[row][col-1]==LASER || board[row+1][col]==LASER){
+                    return false;
+                }
+            }
+            else{
+                if(board[row][col-1]==LASER||board[row][col+1]==LASER||board[row+1][col]==LASER){
+                    return false;
+                }
+            }
+        }
+        else if(row == numRows-1){
+            if(col==0){
+                if(board[row-1][col]==LASER||board[row][col+1]==LASER){
+                    return false;
+                }
+            }
+            else if(col==numCol-1){
+                if(board[row-1][col]==LASER||board[row][col-1]==LASER){
+                    return false;
+                }
+            }
+            else{
+                if(board[row-1][col]==LASER||board[row][col-1]==LASER||board[row][col+1]==LASER){
+                    return false;
+                }
+            }
+        }
+        else if(col == 0){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER||board[row][col+1]==LASER||board[row+1][col]==LASER){
+                    return false;
+                }
+            }
+        }
+        else if (col == numCol-1){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER||board[row][col-1]==LASER||board[row+1][col]==LASER){
+                    return false;
+                }
+            }
+        }
+        else{
+            if(board[row+1][col]==LASER||board[row][col+1]==LASER||board[row-1][col]==LASER||board[row][col-1]==LASER){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean oneVal(int row, int col){
+        int counter = 0;
+        if(row==0){
+            if(col==0){
+                if(board[row][col+1]==LASER){
+                    counter ++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter ++;
+                }
+            }
+            else if(col==numCol-1){
+                if(board[row][col-1]==LASER){
+                    counter ++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+            else{
+                if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else if(row==numRows-1){
+            if(col==0){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+            }
+            else if(col == numCol-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+            }
+            else{
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else if(col==0){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter ++;
+                }
+            }
+        }
+        else if(col == numCol-1){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else{
+            if(board[row+1][col]==LASER){
+                counter++;
+            }
+            else if(board[row][col+1]==LASER){
+                counter++;
+            }
+            else if(board[row-1][col]==LASER){
+                counter++;
+            }
+            else if(board[row][col-1]==LASER){
+                counter++;
+            }
+        }
+
+        if(counter == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean twoVal(int row, int col){
+        int counter = 0;
+        if(row==0){
+            if(col==0){
+                if(board[row][col+1]==LASER){
+                    counter ++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter ++;
+                }
+            }
+            else if(col==numCol-1){
+                if(board[row][col-1]==LASER){
+                    counter ++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+            else{
+                if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else if(row==numRows-1){
+            if(col==0){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+            }
+            else if(col == numCol-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+            }
+            else{
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else if(col==0){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter ++;
+                }
+            }
+        }
+        else if(col == numCol-1){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else{
+            if(board[row+1][col]==LASER){
+                counter++;
+            }
+            else if(board[row][col+1]==LASER){
+                counter++;
+            }
+            else if(board[row-1][col]==LASER){
+                counter++;
+            }
+            else if(board[row][col-1]==LASER){
+                counter++;
+            }
+        }
+
+        if(counter == 2){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean threeVal(int row, int col){
+        int counter = 0;
+        if(row==0){
+            if(col==0){
+                if(board[row][col+1]==LASER){
+                    counter ++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter ++;
+                }
+            }
+            else if(col==numCol-1){
+                if(board[row][col-1]==LASER){
+                    counter ++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+            else{
+                if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else if(row==numRows-1){
+            if(col==0){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+            }
+            else if(col == numCol-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+            }
+            else{
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else if(col==0){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter ++;
+                }
+            }
+        }
+        else if(col == numCol-1){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else{
+            if(board[row+1][col]==LASER){
+                counter++;
+            }
+            else if(board[row][col+1]==LASER){
+                counter++;
+            }
+            else if(board[row-1][col]==LASER){
+                counter++;
+            }
+            else if(board[row][col-1]==LASER){
+                counter++;
+            }
+        }
+
+        if(counter == 3){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean fourVal(int row, int col){
+        int counter = 0;
+        if(row==0){
+            if(col==0){
+                if(board[row][col+1]==LASER){
+                    counter ++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter ++;
+                }
+            }
+            else if(col==numCol-1){
+                if(board[row][col-1]==LASER){
+                    counter ++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+            else{
+                if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else if(row==numRows-1){
+            if(col==0){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+            }
+            else if(col == numCol-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+            }
+            else{
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else if(col==0){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col+1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter ++;
+                }
+            }
+        }
+        else if(col == numCol-1){
+            if(row != 0 || row != numRows-1){
+                if(board[row-1][col]==LASER){
+                    counter++;
+                }
+                else if(board[row][col-1]==LASER){
+                    counter++;
+                }
+                else if(board[row+1][col]==LASER){
+                    counter++;
+                }
+            }
+        }
+        else{
+            if(board[row+1][col]==LASER){
+                counter++;
+            }
+            else if(board[row][col+1]==LASER){
+                counter++;
+            }
+            else if(board[row-1][col]==LASER){
+                counter++;
+            }
+            else if(board[row][col-1]==LASER){
+                counter++;
+            }
+        }
+
+        if(counter == 4){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
