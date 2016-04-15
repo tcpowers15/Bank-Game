@@ -13,15 +13,16 @@ public class LasersPTUI {
         if (args.length == 1) {
             String filename = args[0];
             board game = new board(filename);
-            play(game);
+            boolean playing = true;
+            play(game, playing);
         }
         else if (args.length == 2) {
             String filename = args[0];
             String initial = args[1];
 
             board game = new board(filename);
-            game.initiate(initial);
-            play(game);
+           boolean playing = game.initiate(initial);
+            play(game, playing);
         }
         else {
             System.out.println("Usage java LasersPTUI safe-file [input]");
@@ -34,39 +35,48 @@ public class LasersPTUI {
      *
      * @param game a board
      */
-    public static void play(board game){
+    public static void play(board game, boolean plays){
         Scanner in = new Scanner(System.in);
-        boolean playing = true;
+        boolean playing = plays;
 
         while (playing){
             System.out.println(game);
             String input = in.nextLine();
 
             String command = input.substring(0,1);
+            String [] tokens = input.split(" ");
 
             if(command.equals("a")){
-                //TODO
-                //Call boards add method
+                if(tokens.length == 3){
+                    int row = Integer.parseInt(tokens[1]);
+                    int col = Integer.parseInt(tokens[2]);
+                    game.add(row,col);
+                }
+                else{
+                    System.out.println("Incorrect Coordinates");
+                }
             }
             else if(command.equals("d")){
-                //TODO
-                //Call boards display method
+                game.display();
             }
             else if(command.equals("h")){
-                //TODO
-                //Call help
+                game.help();
             }
             else if(command.equals("q")){
-                //TODO
-                //quit
+                playing = game.quit(playing);
             }
             else if(command.equals("r")){
-                //TODO
-                //call boards remove method
+                if(tokens.length == 3){
+                    int row = Integer.parseInt(tokens[1]);
+                    int col = Integer.parseInt(tokens[2]);
+                    game.remove(row,col);
+                }
+                else{
+                    System.out.println("Incorrect Coordinates");
+                }
             }
             else if(command.equals("v")){
-                //TODO
-                //Call boards verify
+                game.verify();
             }
             else{
                 System.out.println("Unrecognized command: " + input);
@@ -75,16 +85,4 @@ public class LasersPTUI {
         }
     }
 
-
-
-
-
-    public void help(){
-        System.out.println("a|add r c: Add laser to (r,c)");
-        System.out.println("d|display: Display safe");
-        System.out.println("h|help: Print this help message");
-        System.out.println("q|quit: Exit program");
-        System.out.println("r|remove r c: Remove laser from (r,c)");
-        System.out.println("v|verify: Verify safe correctness");
-    }
 }

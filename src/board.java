@@ -47,14 +47,17 @@ public class board {
         in.close();
     }
 
+
+
     /**
      * This method takes in a text file, and uses the commands in it to populate
      * the board with the initial set up
      * @param file  the name of a .txt file
      * @throws FileNotFoundException
      */
-    public void initiate(String file) throws FileNotFoundException{
+    public boolean initiate(String file) throws FileNotFoundException{
         Scanner in = new Scanner(new File(file));
+        boolean playing = true;
         while(in.hasNext()){
             String line = in.nextLine();
             String [] tokens = line.split(" ");
@@ -65,37 +68,40 @@ public class board {
                 int col = Integer.parseInt(tokens[2]);
 
                 if(command.substring(0,1).matches("a")){
-                    //TODO
-                    //call the add command using row and column as parameters
+                    add(row,col);
                 }
                 else if(command.substring(0,1).matches("r")){
-                    //TODO
-                    //call the remove command
+                    remove(row,col);
                 }
             }
             else{
 
                 if(command.substring(0,1).matches("d")){
-                    //TODO
-                    //call the display method
+                    display();
                 }
                 else if(command.substring(0,1).matches("h")){
-                    //TODO
-                    //call the help method
+                    help();
                 }
                 else if(command.substring(0,1).matches("q")){
-                    //TODO
-                    //quit the program
+                    playing = quit(playing);
+                    break;
                 }
                 else if(command.substring(0,1).matches("v")){
-                    //TODO
-                    //call the verify method
+                    verify();
                 }
-
             }
+        }
+        in.close();
 
+        if(playing){
+            return true;
+        }
+        else{
+            return false;
         }
     }
+
+
 
     /**
      * This method will verify whether or not the board is valid or not
@@ -107,6 +113,13 @@ public class board {
         return false;
     }
 
+
+
+    /**
+     * This method adds a laser at the specified location
+     * @param r the row number
+     * @param c the column number
+     */
     public void add(int r, int c) {
         if (board[r][c] == LASER || board[r][c] == xPillar || board[r][c] == zero || board[r][c] == one
                 || board[r][c] == two || board[r][c] == three || board[r][c] == four) {
@@ -150,6 +163,13 @@ public class board {
         }
     }
 
+
+
+    /**
+     * This method removes a laser from a given position
+     * @param r the row number
+     * @param c the column number
+     */
     public void remove(int r, int c){
         // make check for other lasers
         boolean hasLaser;
@@ -202,6 +222,41 @@ public class board {
             System.out.println("Error removing laser at: (" + r + "," + c + ")");
         }
     }
+
+
+
+
+    /**
+     * This method prints the board
+     */
+    public void display(){
+        String r = this.toString();
+        System.out.println(r);
+    }
+
+
+    /**
+     * This prints the help message
+     */
+    public void help(){
+        System.out.println("a|add r c: Add laser to (r,c)");
+        System.out.println("d|display: Display safe");
+        System.out.println("h|help: Print this help message");
+        System.out.println("q|quit: Exit program");
+        System.out.println("r|remove r c: Remove laser from (r,c)");
+        System.out.println("v|verify: Verify safe correctness");
+    }
+
+
+    /**
+     * causes the program to quit
+     */
+    public boolean quit (boolean play){
+        play = false;
+        return play;
+    }
+
+
 
     public String toString(){
         String result = "  ";
