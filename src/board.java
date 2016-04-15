@@ -220,268 +220,6 @@ public class board {
         }
     }
 
-
-
-    /**
-     * This method removes a laser from a given position
-     * @param r the row number
-     * @param c the column number
-
-    public void remove(int r, int c){
-        boolean hasLaser;
-        boolean hasLaser2;
-        boolean hasLaser3;
-        boolean column;
-        if (board[r][c] == LASER){
-            hasLaser = false;
-            hasLaser2 = false;
-            hasLaser3 = false;
-            column = false;
-            for(int i = 1; r+i < numRows;i++){
-                if(board[r+i][c] == L_BEAM && !hasLaser){
-                    for(int m = 1; r+m < numRows; m++){
-                        if(board[r+m][c] == LASER){
-                            hasLaser = true;
-                            break;
-                        }
-                        else if(board[r+m][c] == xPillar || board[r+m][c] == zero || board[r+m][c] == one ||
-                                board[r+m][c] == two || board[r+m][c] == three || board[r+m][c] == four){
-                            hasLaser2 = true;
-                            break;
-                        }
-                        else{
-                            hasLaser = false;
-                        }
-                    }
-                    for(int n = 1; c+n < numCol; n++){
-                        if(board[r][c+n] == LASER){
-                            hasLaser2 = true;
-                            break;
-                        }
-                        else if(board[r][c+n] == xPillar || board[r][c+n] == zero || board[r][c+n] == one ||
-                                board[r][c+n] == two || board[r][c+n] == three || board[r][c+n] == four){
-                            hasLaser2 = true;
-                            break;
-                        }
-                        else{
-                            hasLaser2 = false;
-                        }
-                    }
-                    for(int o = 1; c-o >= 0; o++){
-                        if(board[r][c-o] == LASER){
-                            hasLaser3 = true;
-                            break;
-                        }
-                        else if(board[r][c-o] == xPillar || board[r][c-o] == zero || board[r][c-o] == one ||
-                                board[r][c-o] == two || board[r][c-o] == three || board[r][c-o] == four){
-                            hasLaser3 = true;
-                            break;
-                        }
-                        else{
-                            hasLaser3 = false;
-                        }
-                    }
-                    if(!hasLaser3 && !hasLaser2 && !hasLaser){
-                        board[r+i][c] = EMPTY;
-                    }
-                    if(hasLaser){
-                        board[r][c] = L_BEAM;
-                    }
-                }
-                else{
-                    break;
-                }
-            }
-            hasLaser = false;
-            hasLaser2 = false;
-            hasLaser3 = false;
-            column = false;
-            for(int j = 1; r-j >= 0; j++){
-                if(board[r-j][c] == L_BEAM && !hasLaser){
-                    for(int jm = 1; r-jm >= 0; jm++){
-                        if(board[r-jm][c] == LASER){
-                            hasLaser = true;
-                            break;
-                        }
-                        else if(board[r-jm][c] == xPillar || board[r-jm][c] == zero || board[r-jm][c] == one ||
-                                board[r-jm][c] == two || board[r-jm][c] == three || board[r-jm][c] == four){
-                            hasLaser2 = true;
-                            break;
-                        }
-                        else{
-                            hasLaser = false;
-                        }
-                    }
-                    for(int jn = 1; c+jn < numCol; jn++){
-                        if(board[r][c+jn] == LASER){
-                            hasLaser2 = true;
-                            break;
-                        }
-                        else if(board[r][c+jn] == xPillar || board[r][c+jn] == zero || board[r][c+jn] == one ||
-                                board[r][c+jn] == two || board[r][c+jn] == three || board[r][c+jn] == four){
-                            hasLaser2 = true;
-                            break;
-                        }
-                        else{
-                            hasLaser2 = false;
-                        }
-                    }
-                    for(int jo = 1; c-jo >= 0; jo++){
-                        if(board[r][c-jo] == LASER){
-                            hasLaser3 = true;
-                            break;
-                        }
-                        else if(board[r][c-jo] == xPillar || board[r][c-jo] == zero || board[r][c-jo] == one ||
-                                board[r][c-jo] == two || board[r][c-jo] == three || board[r][c-jo] == four){
-                            hasLaser3 = true;
-                            break;
-                        }
-                        else{
-                            hasLaser3 = false;
-                        }
-                    }
-                    if(!hasLaser3 && !hasLaser2 && !hasLaser){
-                        board[r-j][c] = EMPTY;
-                    }
-                    if(hasLaser){
-                        board[r][c] = L_BEAM;
-                    }
-                }
-                else{
-                    break;
-                }
-            }
-            hasLaser = false;
-            hasLaser2 = false;
-            hasLaser3 = false;
-            column = false;
-            for(int k = 1; c+k < numCol; k++){
-                if(board[r][c+k] == L_BEAM && !hasLaser){
-                    for(int km = 1; c+km < numRows; km++){
-                        if(board[r][c+km] == LASER){
-                            hasLaser = true;
-                            break;
-                        }
-                        else if(board[r][c+km] == xPillar || board[r][c+km] == zero || board[r][c+km] == one ||
-                                board[r][c+km] == two || board[r][c+km] == three || board[r][c+km] == four){
-                            hasLaser2 = true;
-                            break;
-                        }
-                        else{
-                            hasLaser = false;
-                        }
-                    }
-                    for(int kn = 1; r+kn < numCol; kn++){
-                        if(board[r+kn][c] == LASER){
-                            hasLaser2 = false;
-                            break;
-                        }
-                        else if(board[r+kn][c] == xPillar || board[r+kn][c] == zero || board[r+kn][c] == one ||
-                                board[r+kn][c] == two || board[r+kn][c] == three || board[r+kn][c] == four){
-                            hasLaser2 = true;
-                            break;
-                        }
-                        else{
-                            hasLaser2 = false;
-                        }
-                    }
-                    for(int ko = 1; r-ko >= 0; ko++){
-                        if(board[r-ko][c] == LASER){
-                            hasLaser3 = true;
-                            break;
-                        }
-                        else if(board[r-ko][c] == xPillar || board[r-ko][c] == zero || board[r-ko][c] == one ||
-                                board[r-ko][c] == two || board[r-ko][c] == three || board[r-ko][c] == four){
-                            hasLaser3 = true;
-                            break;
-                        }
-                        else{
-                            hasLaser3 = false;
-                        }
-                    }
-                    if(!hasLaser3 && !hasLaser2 && !hasLaser){
-                        board[r+k][c] = EMPTY;
-                    }
-                    if(hasLaser){
-                        board[r][c] = L_BEAM;
-                    }
-                }
-                else{
-                    break;
-                }
-            }
-            hasLaser = false;
-            hasLaser2 = false;
-            hasLaser3 = false;
-            column = false;
-            for(int l = 1; c-l >= 0; l++){
-                if(board[r][c-l] == L_BEAM && !hasLaser){
-                    for(int lm = 1; c-lm >= 0; lm++){
-                        if(board[r][c-lm] == LASER){
-                            hasLaser = true;
-                            break;
-                        }
-                        else if(board[r][c-lm] == xPillar || board[r][c-lm] == zero || board[r][c-lm] == one ||
-                                board[r][c-lm] == two || board[r][c-lm] == three || board[r][c-lm] == four){
-                            hasLaser2 = false;
-                            break;
-                        }
-                        else{
-                            hasLaser = false;
-                        }
-                    }
-                    for(int ln = 1; r+ln < numCol; ln++){
-                        if(board[r+ln][c] == LASER){
-                            hasLaser2 = true;
-                            break;
-                        }
-                        else if(board[r+ln][c] == xPillar || board[r+ln][c] == zero || board[r+ln][c] == one ||
-                                board[r+ln][c] == two || board[r+ln][c] == three || board[r+ln][c] == four){
-                            hasLaser2 = false;
-                            break;
-                        }
-                        else{
-                            hasLaser2 = false;
-                        }
-                    }
-                    for(int lo = 1; r-lo >= 0; lo++){
-                        if(board[r-lo][c] == LASER){
-                            hasLaser3 = true;
-                            break;
-                        }
-                        else if(board[r-lo][c] == xPillar || board[r-lo][c] == zero || board[r-lo][c] == one ||
-                                board[r-lo][c] == two || board[r-lo][c] == three || board[r-lo][c] == four){
-                            hasLaser3 = false;
-                            break;
-                        }
-                        else{
-                            hasLaser3 = false;
-                        }
-                    }
-                    if(!hasLaser3 && !hasLaser2 && !hasLaser){
-                        board[r+l][c] = EMPTY;
-                    }
-                    if(hasLaser){
-                        board[r][c] = L_BEAM;
-                    }
-                }
-                else{
-                    break;
-                }
-            }
-            if(board[r][c] == LASER){
-                board[r][c] = EMPTY;
-            }
-            System.out.println("Laser removed at: (" + r + ", " + c + ")");
-        }
-        else{
-            System.out.println("Error removing laser at: (" + r + ", " + c + ")");
-        }
-    }
-*/
-
-
-
     /**
      * This method prints the board
      */
@@ -1341,6 +1079,11 @@ public class board {
         }
     }
 
+    /**
+     * Removes the Laser at he given row and column if there is one.
+     * @param r the row number
+     * @param c the column number
+     */
     public void remove(int r, int c){
         if (board[r][c] == LASER) {
             if (removedown(r, c) || removeup(r, c)) {
@@ -1399,6 +1142,12 @@ public class board {
         }
     }
 
+    /**
+     * Checks if there is a laser to the right
+     * @param r the row number
+     * @param c the column number
+     * @return boolean true if there is a laser to the right
+     */
     public boolean removeright(int r, int c){
         boolean hasLaserright = false;
 
@@ -1415,6 +1164,12 @@ public class board {
         return hasLaserright;
     }
 
+    /**
+     * Checks if there is a laser to the left
+     * @param r the row number
+     * @param c the column number
+     * @return boolean true if there is a laser to the left
+     */
     public boolean removeleft(int r, int c){
         boolean hasLaserleft = false;
 
@@ -1431,6 +1186,12 @@ public class board {
         return hasLaserleft;
     }
 
+    /**
+     * Checks if there is a laser to the up
+     * @param r the row number
+     * @param c the column number
+     * @return boolean true if there is a laser to the up
+     */
     public boolean removeup(int r, int c){
         boolean hasLaserup = false;
 
@@ -1447,6 +1208,12 @@ public class board {
         return hasLaserup;
     }
 
+    /**
+     * Checks if there is a laser to the down
+     * @param r the row number
+     * @param c the column number
+     * @return boolean true if there is a laser to the down
+     */
     public boolean removedown(int r, int c){
         boolean hasLaserdown = false;
 
