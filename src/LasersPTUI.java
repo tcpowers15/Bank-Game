@@ -22,7 +22,7 @@ public class LasersPTUI {
             play(game, play);
         }
         else {
-            System.out.println("Usage java LasersPTUI safe-file [input]");
+            System.out.println("Usage: java LasersPTUI safe-file [input]");
         }
     }
 
