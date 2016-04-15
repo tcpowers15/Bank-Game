@@ -6,6 +6,8 @@ import java.util.Scanner;
  */
 public class LasersPTUI {
 
+    private board game;
+
     public static void main(String[] args) throws FileNotFoundException {
         Scanner in = new Scanner(System.in);
 
@@ -23,6 +25,4 @@ public class LasersPTUI {
         System.out.println("r|remove r c: Remove laser from (r,c)");
         System.out.println("v|verify: Verify safe correctness");
     }
-
-
 }
