@@ -42,10 +42,13 @@ public class LasersPTUI {
             String input = in.nextLine();
 
 
+
             String command = input.substring(0,1);
             String[] tokens = input.split(" ");
-
-            if(command.equals("a")){
+            if(tokens.length == 0){
+                int g = 0;
+            }
+            else if(command.equals("a")){
                 if(tokens.length == 3){
                     int row = Integer.parseInt(tokens[1]);
                     int col = Integer.parseInt(tokens[2]);
@@ -53,7 +56,7 @@ public class LasersPTUI {
                     System.out.print(game);
                 }
                 else{
-                    System.out.println("Incorrect Coordinates");
+                    System.out.println("Incorrect coordinates");
                 }
             }
             else if(command.equals("d")){
@@ -73,7 +76,7 @@ public class LasersPTUI {
                     System.out.print(game);
                 }
                 else{
-                    System.out.println("Incorrect Coordinates");
+                    System.out.println("Incorrect coordinates");
                 }
             }
             else if(command.equals("v")){
