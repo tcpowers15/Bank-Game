@@ -50,11 +50,11 @@ public class LasersPTUI {
                     int row = Integer.parseInt(tokens[1]);
                     int col = Integer.parseInt(tokens[2]);
                     game.add(row, col);
+                    System.out.println(game);
                 }
                 else{
                     System.out.println("Incorrect Coordinates");
                 }
-                System.out.print(game);
             }
             else if(command.equals("d")){
                 game.display();
@@ -70,11 +70,11 @@ public class LasersPTUI {
                     int row = Integer.parseInt(tokens[1]);
                     int col = Integer.parseInt(tokens[2]);
                     game.remove(row,col);
+                    System.out.println(game);
                 }
                 else{
                     System.out.println("Incorrect Coordinates");
                 }
-                System.out.print(game);
             }
             else if(command.equals("v")){
                 game.verify();
