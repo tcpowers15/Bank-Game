@@ -41,6 +41,7 @@ public class LasersPTUI {
             System.out.print("> ");
             String input = in.nextLine();
 
+
             String command = input.substring(0,1);
             String[] tokens = input.split(" ");
 

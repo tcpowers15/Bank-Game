@@ -62,6 +62,7 @@ public class board {
             display();
             String line = in.nextLine();
             String [] tokens = line.split(" ");
+            System.out.println("> "+line);
 
             String command = tokens[0];
             if(tokens.length == 3){
