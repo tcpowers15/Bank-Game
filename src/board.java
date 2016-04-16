@@ -156,7 +156,7 @@ public class board {
                   }
                   if(!isvalid){
                       sbreak = true;
-                      System.out.println("Trouble verifying at: ("+row+", "+col+")");
+                      System.out.println("Error verifying at: ("+row+", "+col+")");
                       break;
                   }
               }
@@ -167,7 +167,7 @@ public class board {
             System.out.println("Safe is fully verified!");
         }
         else{
-            System.out.println("Trouble verifying at: ("+orow+", "+ocol+")");
+            System.out.println("Error verifying at: ("+orow+", "+ocol+")");
         }
     }
 
