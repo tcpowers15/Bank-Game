@@ -115,16 +115,19 @@ public class LasersGUI extends Application implements Observer {
      * @param stage the stage to add UI components into
      */
     private void init(Stage stage) {
-        // TODO
         this.primaryStage = stage;
         this.hbox = new HBox();
         this.buttom = new HBox();
         this.grid = new GridPane();
     }
 
+    /**
+     * creates the initial GUI
+     * @param primaryStage the stage for the GUI
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // TODO
         init(primaryStage);  // do all your UI initialization here
         BorderPane window = new BorderPane();
         window.setPadding(new Insets(20, 20, 20, 20));
@@ -135,7 +138,6 @@ public class LasersGUI extends Application implements Observer {
         setGrid();
 
         setHBox();
-        //mooooooorrrrrreeeeeeeee event handlers
 
         window.setTop(this.hbox);
         window.setBottom(this.buttom);
@@ -146,9 +148,13 @@ public class LasersGUI extends Application implements Observer {
         primaryStage.show();
     }
 
+    /**
+     * updates the gui based on changes made to the model
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
-        // TODO
         Platform.runLater(
                 () -> {
                     UpdateGrid();
@@ -158,6 +164,9 @@ public class LasersGUI extends Application implements Observer {
         );
     }
 
+    /**
+     * Creates the middle grid for the safe representation
+     */
     public void setGrid(){
         this.grid.setPadding(new Insets(10, 10, 10, 10));
         this.grid.setHgap(10);
@@ -177,7 +186,12 @@ public class LasersGUI extends Application implements Observer {
                     Image laserImg = new Image(getClass().getResourceAsStream("resources/laser.png"));
                     ImageView laserIcon = new ImageView(laserImg);
                     button.setGraphic(laserIcon);
-                    setButtonBackground(button, "yellow.png");
+                    if(this.model.getproblem() && i == this.model.getprow() && this.model.getpcol() == j){
+                        setButtonBackground(button, "red.png");
+                    }
+                    else{
+                        setButtonBackground(button, "yellow.png");
+                    }
                     button.setOnAction(e -> {
                         this.model.remove(row, col);
                     });
@@ -193,7 +207,12 @@ public class LasersGUI extends Application implements Observer {
                     Image lbeamImg = new Image(getClass().getResourceAsStream("resources/beam.png"));
                     ImageView beamIcon = new ImageView(lbeamImg);
                     button.setGraphic(beamIcon);
-                    setButtonBackground(button, "yellow.png");
+                    if(!this.model.getproblem() && i == this.model.getprow() && this.model.getpcol() == j){
+                        setButtonBackground(button, "red.png");
+                    }
+                    else{
+                        setButtonBackground(button, "yellow.png");
+                    }
                     button.setOnAction(e -> {
                         this.model.add(row, col);
                     });
@@ -208,7 +227,12 @@ public class LasersGUI extends Application implements Observer {
                     Image pillar0Img = new Image(getClass().getResourceAsStream("resources/pillar0.png"));
                     ImageView pillar0Icon = new ImageView(pillar0Img);
                     button.setGraphic(pillar0Icon);
-                    setButtonBackground(button, "white.png");
+                    if(!this.model.getproblem() && i == this.model.getprow() && this.model.getpcol() == j){
+                        setButtonBackground(button, "red.png");
+                    }
+                    else{
+                        setButtonBackground(button, "white.png");
+                    }
                     button.setOnAction(e -> {
                         this.model.add(row, col);
                     });
@@ -223,7 +247,12 @@ public class LasersGUI extends Application implements Observer {
                     Image pillar1Img = new Image(getClass().getResourceAsStream("resources/pillar1.png"));
                     ImageView pillar1Icon = new ImageView(pillar1Img);
                     button.setGraphic(pillar1Icon);
-                    setButtonBackground(button, "white.png");
+                    if(!this.model.getproblem() && i == this.model.getprow() && this.model.getpcol() == j){
+                        setButtonBackground(button, "red.png");
+                    }
+                    else{
+                        setButtonBackground(button, "white.png");
+                    }
                     button.setOnAction(e -> {
                         this.model.add(row, col);
                     });
@@ -238,7 +267,12 @@ public class LasersGUI extends Application implements Observer {
                     Image pillar2Img = new Image(getClass().getResourceAsStream("resources/pillar2.png"));
                     ImageView pillar2Icon = new ImageView(pillar2Img);
                     button.setGraphic(pillar2Icon);
-                    setButtonBackground(button, "white.png");
+                    if(!this.model.getproblem() && i == this.model.getprow() && this.model.getpcol() == j){
+                        setButtonBackground(button, "red.png");
+                    }
+                    else{
+                        setButtonBackground(button, "white.png");
+                    }
                     button.setOnAction(e -> {
                         this.model.add(row, col);
                     });
@@ -253,7 +287,12 @@ public class LasersGUI extends Application implements Observer {
                     Image pillar3Img = new Image(getClass().getResourceAsStream("resources/pillar3.png"));
                     ImageView pillar3Icon = new ImageView(pillar3Img);
                     button.setGraphic(pillar3Icon);
-                    setButtonBackground(button, "white.png");
+                    if(!this.model.getproblem() && i == this.model.getprow() && this.model.getpcol() == j){
+                        setButtonBackground(button, "red.png");
+                    }
+                    else{
+                        setButtonBackground(button, "white.png");
+                    }
                     button.setOnAction(e -> {
                         this.model.add(row, col);
                     });
@@ -268,7 +307,12 @@ public class LasersGUI extends Application implements Observer {
                     Image pillar4Img = new Image(getClass().getResourceAsStream("resources/pillar4.png"));
                     ImageView pillar4Icon = new ImageView(pillar4Img);
                     button.setGraphic(pillar4Icon);
-                    setButtonBackground(button, "white.png");
+                    if(!this.model.getproblem() && i == this.model.getprow() && this.model.getpcol() == j){
+                        setButtonBackground(button, "red.png");
+                    }
+                    else{
+                        setButtonBackground(button, "white.png");
+                    }
                     button.setOnAction(e -> {
                         this.model.add(row, col);
                     });
@@ -283,7 +327,12 @@ public class LasersGUI extends Application implements Observer {
                     Image pillarxImg = new Image(getClass().getResourceAsStream("resources/pillarX.png"));
                     ImageView pillarxIcon = new ImageView(pillarxImg);
                     button.setGraphic(pillarxIcon);
-                    setButtonBackground(button, "white.png");
+                    if(!this.model.getproblem() && i == this.model.getprow() && this.model.getpcol() == j){
+                        setButtonBackground(button, "red.png");
+                    }
+                    else{
+                        setButtonBackground(button, "white.png");
+                    }
                     button.setOnAction(e -> {
                         this.model.add(row, col);
                     });
@@ -296,7 +345,12 @@ public class LasersGUI extends Application implements Observer {
                     button.setPadding(new Insets(0, 0, 0, 0));
                     button.setShape(new Rectangle(40, 40));
                     button.setPrefSize(30, 30);
-                    setButtonBackground(button, "white.png");
+                    if(!this.model.getproblem() && i == this.model.getprow() && this.model.getpcol() == j){
+                        setButtonBackground(button, "red.png");
+                    }
+                    else{
+                        setButtonBackground(button, "white.png");
+                    }
                     button.setOnAction(e -> {
                         this.model.add(row, col);
                     });
@@ -308,6 +362,9 @@ public class LasersGUI extends Application implements Observer {
         }
     }
 
+    /**
+     * Creates a horizontal box of the bottom buttons check, hint, solve, restart, load
+     */
     public void setHBox(){
         this.buttom.setPadding(new Insets(20, 20, 20, 20));
         this.buttom.setAlignment(Pos.CENTER);
@@ -367,6 +424,9 @@ public class LasersGUI extends Application implements Observer {
         this.buttom.getChildren().addAll(Check, Hint, Solve, Restart, Load);
     }
 
+    /**
+     * Creates the Label at the top that reads what just happened
+     */
     public  void setTop(){
         Label toplabel = new Label(this.model.getFilename() + " loaded");
         toplabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
@@ -377,10 +437,16 @@ public class LasersGUI extends Application implements Observer {
 
     }
 
+    /**
+     * updates the middle grid
+     */
     public void UpdateGrid(){
         setGrid();
     }
 
+    /**
+     * updates the top label
+     */
     public void UpdateLabel(){
         Label l = new Label(this.model.getOuts());
         this.hbox.getChildren().remove(0);

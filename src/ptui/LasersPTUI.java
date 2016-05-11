@@ -12,7 +12,7 @@ import model.LasersModel;
  * You should create the model here, and then implement the update method.
  *
  * @author Sean Strout @ RIT CS
- * @author YOUR NAME HERE
+ * @author Brian Powers & Trevor Powers
  */
 public class LasersPTUI implements Observer {
     /** The UI's connection to the model */
@@ -35,6 +35,11 @@ public class LasersPTUI implements Observer {
 
     public LasersModel getModel() { return this.model; }
 
+    /**
+     * updates the model
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         System.out.println(this.model.getOuts());

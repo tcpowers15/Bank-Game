@@ -15,11 +15,14 @@ import java.util.Scanner;
 public class LasersModel extends Observable {
 
     private char [][] board;  //This 2d array is the board itself
-    private int numRows = 0;
-    private int numCol = 0;
-    private String WeOut = "";
-    private String filename = "";
-    private SafeConfig solution;
+    private int numRows = 0; //number of rows in safe
+    private int numCol = 0; //number of columns in safe
+    private String WeOut = ""; //the output to make the top label when updated
+    private String filename = ""; //the name of the safe being run
+    private SafeConfig solution; //the solution to the safe
+    int problemrow; //a row where there is a problem
+    int problemcol; //a column where there is a problem
+    boolean problem = false; //if there is a problem or not
 
     private final static char EMPTY = '.';  //used for tiles that currently have nothing on them
     private final static char LASER = 'L';  // used for tiles that are holding a laser
@@ -31,6 +34,11 @@ public class LasersModel extends Observable {
     private final static char three = '3'; //used for pillars that requires three lasers
     private final static char four = '4'; //used for pillars that requires four lasers
 
+    /**
+     * creates the model for a safe file
+     * @param filename filename of a safe
+     * @throws FileNotFoundException
+     */
     public LasersModel(String filename) throws FileNotFoundException {
         this.filename = filename;
         Scanner in = new Scanner(new File(filename));
@@ -80,6 +88,10 @@ public class LasersModel extends Observable {
             boolean sbreak = false;
             for(int row = 0; row < numRows; row ++){
                 for(int col = 0; col < numCol; col++){
+                    if(!isvalid){
+                        break;
+                    }
+
                     char help = board[row][col];
                     if(help == LASER){
                         isvalid = laserVal(row, col);
@@ -102,6 +114,10 @@ public class LasersModel extends Observable {
                     if(!isvalid){
                         sbreak = true;
                         this.WeOut = "Error verifying at: ("+row+", "+col+")";
+                        problem = true;
+                        problemcol = col;
+                        problemrow = row;
+                        announceChange();
                         break;
                     }
                 }
@@ -111,11 +127,15 @@ public class LasersModel extends Observable {
             }
             if(isvalid){
                 this.WeOut = "Safe is fully verified!";
+                problem = false;
             }
 
         }
         else{
             this.WeOut = "Error verifying at: ("+orow+", "+ocol+")";
+            problem = true;
+            problemcol = ocol;
+            problemrow = orow;
         }
         announceChange();
     }
@@ -1147,31 +1167,50 @@ public class LasersModel extends Observable {
         }
     }
 
+    /**
+     * returns the string to be outputted
+     * @return
+     */
     public String getOuts(){
         return this.WeOut;
     }
 
+    /**
+     * returns the number of rows in a safe
+     * @return
+     */
     public int getrows(){
         return this.numRows;
     }
 
+    /**
+     * returns the number of columns in a safe
+     * @return
+     */
     public int getcols(){
         return this.numCol;
     }
 
+    /**
+     * returns waht is being held at a col row position
+     * @param col
+     * @param row
+     * @return
+     */
     public char getPos(int col, int row){
         return board[row][col];
     }
 
+    /**
+     * creates a hint for the user
+     * @throws FileNotFoundException
+     */
     public void hint() throws FileNotFoundException{
         // construct the initial configuration from the file
         Configuration init = new SafeConfig(this.filename);
 
         // create the backtracker with the debug flag
         Backtracker bt = new Backtracker(false);
-
-        // start the clock
-        double start = System.currentTimeMillis();
 
         // attempt to solve the puzzle
         Optional<Configuration> sol = bt.solve(init);
@@ -1191,11 +1230,11 @@ public class LasersModel extends Observable {
             if(works){
                 for(int r = 0; r < numRows; r++) {
                     for (int c = 0; c < numCol; c++) {
-                            if (solution.getboard()[r][c] == 'L' && board[r][c] != 'L' && !hint) {
-                                hint = true;
-                                add(r, c);
-                                WeOut = "Hint: added laser to (" + r + ", " + c + ")";
-                            }
+                        if (solution.getboard()[r][c] == 'L' && board[r][c] != 'L' && !hint) {
+                            hint = true;
+                            add(r, c);
+                            WeOut = "Hint: added laser to (" + r + ", " + c + ")";
+                        }
                     }
                 }
             }
@@ -1204,20 +1243,21 @@ public class LasersModel extends Observable {
             }
             announceChange();
         }else{
-
+            WeOut = "You just received a hint";
             announceChange();
         }
     }
 
+    /**
+     * solves the puzzle
+     * @throws FileNotFoundException
+     */
     public void solve()throws FileNotFoundException{
         // construct the initial configuration from the file
         Configuration init = new SafeConfig(this.filename);
 
         // create the backtracker with the debug flag
         Backtracker bt = new Backtracker(false);
-
-        // start the clock
-        double start = System.currentTimeMillis();
 
         // attempt to solve the puzzle
         Optional<Configuration> sol = bt.solve(init);
@@ -1235,6 +1275,10 @@ public class LasersModel extends Observable {
         announceChange();
     }
 
+    /**
+     * restarts using the current file
+     * @throws FileNotFoundException
+     */
     public void restart() throws FileNotFoundException{
         Scanner in = new Scanner(new File(filename));
         this.numRows = in.nextInt();
@@ -1255,17 +1299,40 @@ public class LasersModel extends Observable {
         announceChange();
     }
 
+    /**
+     * returns the current filename
+     * @return
+     */
     public String getFilename(){
         return this.filename;
     }
 
+    /**
+     * sets the current filename
+     * @param file
+     */
     public void setFilename(String file){
         this.filename = file;
     }
 
+    /**
+     * changes the ouptut to loaded a file
+     */
     public void load(){
         this.WeOut = filename + " loaded";
         announceChange();
+    }
+
+    public boolean getproblem(){
+        return this.problem;
+    }
+
+    public int getprow(){
+        return this.problemrow;
+    }
+
+    public int getpcol(){
+        return this.problemcol;
     }
 
     /**
