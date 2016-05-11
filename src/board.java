@@ -133,37 +133,37 @@ public class board {
         }
         if(populated){
             boolean sbreak = false;
-          for(int row = 0; row < numRows; row ++){
-              for(int col = 0; col < numCol; col++){
-                  char help = board[row][col];
-                  if(help == LASER){
-                      isvalid = laserVal(row, col);
-                  }
-                  else if(help == zero){
-                      isvalid = zeroVal(row, col);
-                  }
-                  else if(help == one){
-                      isvalid = oneVal(row, col);
-                  }
-                  else if(help == two){
-                      isvalid = twoVal(row,col);
-                  }
-                  else if(help == three){
-                      isvalid = threeVal(row, col);
-                  }
-                  else if(help == four){
-                      isvalid = fourVal(row, col);
-                  }
-                  if(!isvalid){
-                      sbreak = true;
-                      System.out.println("Error verifying at: ("+row+", "+col+")");
-                      break;
-                  }
-              }
-              if(sbreak){
-                  break;
-              }
-          }
+            for(int row = 0; row < numRows; row ++){
+                for(int col = 0; col < numCol; col++){
+                    char help = board[row][col];
+                    if(help == LASER){
+                        isvalid = laserVal(row, col);
+                    }
+                    else if(help == zero){
+                        isvalid = zeroVal(row, col);
+                    }
+                    else if(help == one){
+                        isvalid = oneVal(row, col);
+                    }
+                    else if(help == two){
+                        isvalid = twoVal(row,col);
+                    }
+                    else if(help == three){
+                        isvalid = threeVal(row, col);
+                    }
+                    else if(help == four){
+                        isvalid = fourVal(row, col);
+                    }
+                    if(!isvalid){
+                        sbreak = true;
+                        System.out.println("Error verifying at: ("+row+", "+col+")");
+                        break;
+                    }
+                }
+                if(sbreak){
+                    break;
+                }
+            }
             System.out.println("Safe is fully verified!");
         }
         else{

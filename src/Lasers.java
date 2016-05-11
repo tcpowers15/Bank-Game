@@ -73,7 +73,7 @@ public class Lasers {
                     // now create the "controller"
                     ControllerPTUI ctrlr = new ControllerPTUI(ptui.getModel());
                     // now pass control to the run method of the controller
-                    ctrlr.run(inputFile);
+                    ctrlr.run(inputFile +".txt");
                     break;
                 case UNKNOWN:
                     usage();

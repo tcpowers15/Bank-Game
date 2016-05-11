@@ -103,7 +103,10 @@ public class LasersModel extends Observable {
                     break;
                 }
             }
-            this.WeOut = "Safe is fully verified!";
+            if(isvalid){
+                this.WeOut = "Safe is fully verified!";
+            }
+
         }
         else{
             this.WeOut = "Error verifying at: ("+orow+", "+ocol+")";
