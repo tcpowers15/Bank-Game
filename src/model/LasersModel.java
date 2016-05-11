@@ -1218,34 +1218,31 @@ public class LasersModel extends Observable {
         boolean hint = false;
         int ro = 0;
         int co = 0;
-        if(sol.isPresent()){
-            this.solution = (SafeConfig)sol.get();
-            for(int i = 0; i < numRows; i++){
-                for(int j = 0; j < numCol; j++){
-                    if(board[i][j] == 'L' && solution.getboard()[i][j] != 'L'){
-                       works = false;
-                    }
-                }
-            }
-            if(works){
-                for(int r = 0; r < numRows; r++) {
-                    for (int c = 0; c < numCol; c++) {
-                        if (solution.getboard()[r][c] == 'L' && board[r][c] != 'L' && !hint) {
-                            hint = true;
-                            add(r, c);
-                            WeOut = "Hint: added laser to (" + r + ", " + c + ")";
-                        }
-                    }
-                }
-            }
-            else{
-                WeOut = "Hint: no next step!";
-            }
-            announceChange();
-        }else{
-            WeOut = "You just received a hint";
-            announceChange();
+        if(sol.isPresent()) {
+            this.solution = (SafeConfig) sol.get();
         }
+        for(int i = 0; i < numRows; i++){
+            for(int j = 0; j < numCol; j++){
+                if(board[i][j] == 'L' && solution.getboard()[i][j] != 'L'){
+                    works = false;
+                }
+            }
+        }
+        if(works){
+            for(int r = 0; r < numRows; r++) {
+                for (int c = 0; c < numCol; c++) {
+                    if (solution.getboard()[r][c] == 'L' && board[r][c] != 'L' && !hint) {
+                        hint = true;
+                        add(r, c);
+                        WeOut = "Hint: added laser to (" + r + ", " + c + ")";
+                    }
+                }
+            }
+        }
+        else{
+            WeOut = "Hint: no next step!";
+        }
+        announceChange();
     }
 
     /**
