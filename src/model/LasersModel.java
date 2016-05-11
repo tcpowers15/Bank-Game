@@ -1,10 +1,15 @@
 package model;
 
+import backtracking.Backtracker;
+import backtracking.Configuration;
+import backtracking.SafeConfig;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Observable;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class LasersModel extends Observable {
@@ -14,6 +19,7 @@ public class LasersModel extends Observable {
     private int numCol = 0;
     private String WeOut = "";
     private String filename = "";
+    private SafeConfig solution;
 
     private final static char EMPTY = '.';  //used for tiles that currently have nothing on them
     private final static char LASER = 'L';  // used for tiles that are holding a laser
@@ -1154,12 +1160,74 @@ public class LasersModel extends Observable {
         return board[row][col];
     }
 
-    public void hint(){
+    public void hint() throws FileNotFoundException{
+        // construct the initial configuration from the file
+        Configuration init = new SafeConfig(this.filename);
 
-        announceChange();
+        // create the backtracker with the debug flag
+        Backtracker bt = new Backtracker(false);
+
+        // start the clock
+        double start = System.currentTimeMillis();
+
+        // attempt to solve the puzzle
+        Optional<Configuration> sol = bt.solve(init);
+        boolean works = true;
+        boolean hint = false;
+        int ro = 0;
+        int co = 0;
+        if(sol.isPresent()){
+            this.solution = (SafeConfig)sol.get();
+            for(int i = 0; i < numRows; i++){
+                for(int j = 0; j < numCol; j++){
+                    if(board[i][j] == 'L' && solution.getboard()[i][j] != 'L'){
+                       works = false;
+                    }
+                }
+            }
+            if(works){
+                for(int r = 0; r < numRows; r++) {
+                    for (int c = 0; c < numCol; c++) {
+                            if (solution.getboard()[r][c] == 'L' && board[r][c] != 'L' && !hint) {
+                                hint = true;
+                                add(r, c);
+                                WeOut = "Hint: added laser to (" + r + ", " + c + ")";
+                            }
+                    }
+                }
+            }
+            else{
+                WeOut = "Hint: no next step!";
+            }
+            announceChange();
+        }else{
+            
+            announceChange();
+        }
     }
 
-    public void solve(){
+    public void solve()throws FileNotFoundException{
+        // construct the initial configuration from the file
+        Configuration init = new SafeConfig(this.filename);
+
+        // create the backtracker with the debug flag
+        Backtracker bt = new Backtracker(false);
+
+        // start the clock
+        double start = System.currentTimeMillis();
+
+        // attempt to solve the puzzle
+        Optional<Configuration> sol = bt.solve(init);
+        if(sol.isPresent()){
+            this.solution = (SafeConfig)sol.get();
+
+            this.board = this.solution.getboard();
+            announceChange();
+        }else{
+            this.board = this.solution.getboard();
+            announceChange();
+        }
+
 
         announceChange();
     }
@@ -1195,10 +1263,6 @@ public class LasersModel extends Observable {
     public void load(){
         this.WeOut = filename + " loaded";
         announceChange();
-    }
-
-    public void setOut(int row, int col){
-        this.WeOut = "Error adding Laser at (" + row + ", " + col + ")";
     }
 
     /**

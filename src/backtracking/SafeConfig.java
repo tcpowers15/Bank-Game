@@ -75,6 +75,10 @@ public class SafeConfig implements Configuration {
 
     }
 
+    public char [][] getboard(){
+        return this.board;
+    }
+
     @Override
     public Collection<Configuration> getSuccessors() {
         Collection<Configuration> newConfigs = new ArrayList<Configuration>();

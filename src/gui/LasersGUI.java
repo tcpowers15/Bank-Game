@@ -180,7 +180,6 @@ public class LasersGUI extends Application implements Observer {
                     setButtonBackground(button, "yellow.png");
                     button.setOnAction(e -> {
                         this.model.remove(row, col);
-                        //this.toplabel.setText(this.model.getOuts());
                     });
 
                     this.grid.add(button, j, i);
@@ -197,7 +196,6 @@ public class LasersGUI extends Application implements Observer {
                     setButtonBackground(button, "yellow.png");
                     button.setOnAction(e -> {
                         this.model.add(row, col);
-                        //this.toplabel.setText(this.model.getOuts());
                     });
 
                     this.grid.add(button, j, i);
@@ -333,10 +331,18 @@ public class LasersGUI extends Application implements Observer {
             this.model.verify();
         });
         ((Button)Hint).setOnAction((ActionEvent e) -> {
-            this.model.hint();
+            try {
+                this.model.hint();
+            }catch(FileNotFoundException e1){
+                System.out.println(e1);
+            }
         });
         ((Button)Solve).setOnAction((ActionEvent e) -> {
-            this.model.solve();
+            try {
+                this.model.solve();
+            }catch(FileNotFoundException e1){
+                System.out.println(e1);
+            }
         });
         ((Button)Restart).setOnAction((ActionEvent e) -> {
             try {
