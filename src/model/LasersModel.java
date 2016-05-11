@@ -1201,7 +1201,7 @@ public class LasersModel extends Observable {
             }
             announceChange();
         }else{
-            
+
             announceChange();
         }
     }
